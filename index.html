@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amerika Seyahatine Para Biriktirme</title>
+    <!-- Style -->
+    <link rel="stylesheet" href="./style.css">
+    <!-- Icons -->
+    <script src="https://kit.fontawesome.com/fa178081cb.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="alert-box">
+        <div class="box-container">
+            <div class="box-header"><i class="fas fa-times close-box-btn"></i></div>
+            <div class="box-title">You do not have enough money!</div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="moneybox">
+            <div class="header">Piggy Bank for America Travel <i class="fas fa-flag-usa flag"></i></div>
+            <div class="forms">
+                <div class="add-form form">
+                    <input type="number" placeholder="Amount" min="1" class="adding-money">
+                    <div class="add-money-btn btn">Add!</div>
+                </div>
+
+                <div class="remove-form form">
+                    <input type="number" placeholder="Amount" min="1" class="removing-money">
+                    <div class="remove-money-btn btn">Remove!</div>
+                </div>
+            </div>
+
+            <div class="process-text">123 TL / 18000 TL</div>
+            <div class="process-percentage">15%</div>
+
+            <div class="process">
+                <div class="process-bar"></div>
+            </div>
+        </div>
+
+        <div class="list">
+            <div class="list-title">Prices</div>
+
+            <div class="list-item">
+                -
+                <div class="item-name">Flight Tickets</div>
+                <div class="item-price">6000 TL</div>
+            </div>
+
+            <div class="list-item">
+                -
+                <div class="item-name">Documents</div>
+                <div class="item-price">4000 TL</div>
+            </div>
+
+            <div class="list-item">
+                -
+                <div class="item-name">Money for Spend</div>
+                <div class="item-price">8000 TL</div>
+            </div>
+
+            <div class="list-item">
+                <div class="item-name total">Total:</div>
+                <div class="item-price total">18000 TL</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="switch-box">
+        <div class="dark-side side"><i class="fas fa-moon"></i></div>
+        <div class="light-side side"><i class="fas fa-sun"></i></div>
+
+        <div class="toggle-btn"></div>
+    </div>
+
+
+<!-- JavaScript -->
+<script src="./script.js"></script>
+</body>
+</html>
