@@ -40,8 +40,10 @@ html {
 
 body {
   width: 95%;
-  min-height: 100vh;
+  height: 100vh;
   margin: 0 auto;
+
+  overflow: hidden;
 
   display: flex;
   flex-direction: column;
@@ -128,10 +130,6 @@ img {
 
 .dark .box-container {
   background-color: #1a1a1a;
-}
-
-.dark .list-item:last-child:hover {
-  background-color: #2a2a2a;
 }
 
 .dark input:hover {
@@ -317,7 +315,7 @@ img {
 
 .container {
   width: 100%;
-  min-height: 95vh;
+  height: 95vh;
   background-color: var(--mainBackground);
   border-radius: 8px;
 
@@ -477,7 +475,7 @@ input::placeholder {
 
 .list-item {
   width: 80%;
-  min-height: 10vh;
+  min-height: 8vh;
   padding: 12px;
   margin: 0 auto;
 
@@ -506,10 +504,6 @@ input::placeholder {
 .total {
   font-size: 16px;
   font-weight: bold;
-}
-
-.list-item:last-child:hover {
-  background-color: var(--mainBackground);
 }
 
 /* switch theme */
@@ -838,6 +832,10 @@ input::placeholder {
   border-bottom: 1px solid var(--orange);
 }
 
+.dark .setup-input-active {
+  border-bottom: 1px solid var(--orange);
+}
+
 .menu {
   min-height: 90vh;
 
@@ -923,4 +921,116 @@ input::placeholder {
 
 .sidebar-item-text {
   margin-left: 48px;
+}
+
+/*  */
+
+.item-price {
+  margin-right: 16px;
+}
+
+.icon {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+.icon:hover {
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.dark .icon:hover {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.list-container {
+  width: 100%;
+  min-height: 2vh;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.item-add-btn {
+  width: 76px;
+  height: 32px;
+
+  border-radius: 4px;
+
+  font-size: 14px;
+
+  margin-right: 4px;
+
+  background-color: rgba(0, 204, 255, 0.5);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: 250ms;
+}
+
+.item-add-btn:hover {
+  cursor: pointer;
+  background-color: var(--lightBlue);
+}
+
+.add-item-div {
+  width: 100%;
+  height: 0;
+
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+
+  transition: 750ms;
+}
+
+.show-add-div {
+  height: 16vh;
+
+  margin-top: 8px;
+
+  padding-top: 16px;
+  padding-bottom: 16px;
+
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.list-input {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.add-item-submit-btn {
+  width: 96px;
+  height: 32px;
+  background-color: #1bb77866;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 8px;
+
+  transition: 250ms;
+}
+
+.add-item-submit-btn:hover {
+  background-color: var(--pastelgreen);
+  cursor: pointer;
+}
+
+.list-items {
+  margin-top: 8px;
+
+  height: 66vh;
+  overflow-y: scroll;
+}
+
+.list-items::-webkit-scrollbar {
+  display: none;
 }
