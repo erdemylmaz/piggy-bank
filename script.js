@@ -11,15 +11,128 @@ const currentMoneyDOM = document.querySelector(".process-text");
 const processPercentageDOM = document.querySelector(".process-percentage");
 
 const processBar = document.querySelector(".process-bar");
+const header = document.querySelector(".header");
 
-let currentMoney = 200;
-let goalMoney = 18000;
+const headerText = document.querySelector(".header-text");
+
+const sidebarBtn = document.querySelector(".menu-btn");
+const sidebar = document.querySelector(".sidebar");
+const closeSidebarBtn = document.querySelector(".close-sidebar-btn");
+
+function showSidebar() {
+  sidebar.classList.add("show-sidebar");
+}
+
+function hideSidebar() {
+  sidebar.classList.remove("show-sidebar");
+}
+
+sidebarBtn.addEventListener("click", showSidebar);
+closeSidebarBtn.addEventListener("click", hideSidebar);
+
+// setup
+
+let isSettedUp = false;
+
+let count = 0;
+
+let currentMoney = 0;
+let goalMoney = 0;
+let goalsName = "";
+
+if (localStorage.getItem("isSettedUp")) {
+  isSettedUp = localStorage.getItem("isSettedUp");
+
+  goalsName = localStorage.getItem("piggyBankName");
+  goalMoney = parseInt(localStorage.getItem("piggyBankGoalMoney"));
+}
+
+// localStorage.removeItem("isSettedUp");
+
+const setupDOM = document.querySelector(".setup");
+const piggyBankDOM = document.querySelector(".container");
+
+const goalsNameInput = document.querySelector(".goals-name");
+const goalsPriceInput = document.querySelector(".goals-price");
+
+const goalNameBtn = document.querySelector(".goal-name-btn");
+const goalPriceBtn = document.querySelector(".goal-price-btn");
+
+const resetBtn = document.querySelector(".reset-btn");
+const nextBtn = document.querySelector(".next-btn");
+
+function setName() {
+  goalsName = goalsNameInput.value;
+
+  goalsNameInput.classList.add("setup-input-active");
+  goalNameBtn.classList.add("setup-active");
+
+  count += 1;
+}
+
+function setPrice() {
+  goalMoney = parseInt(goalsPriceInput.value);
+
+  goalsPriceInput.classList.add("setup-input-active");
+  goalPriceBtn.classList.add("setup-active");
+
+  count += 1;
+}
+
+function resetInputs() {
+  goalsName = "";
+  goalsMoney = 0;
+
+  goalsNameInput.value = "";
+  goalsPriceInput.value = "";
+
+  goalsNameInput.classList.remove("setup-input-active");
+  goalsPriceInput.classList.remove("setup-input-active");
+
+  goalNameBtn.classList.remove("setup-active");
+  goalPriceBtn.classList.remove("setup-active");
+}
+
+function next() {
+  if (count == 2) {
+    setupDOM.style.display = "none";
+    piggyBankDOM.style.display = "flex";
+
+    currentMoneyDOM.textContent = `${currentMoney} TL / ${goalMoney} TL `;
+    headerText.innerHTML = `Piggy Bank for ${goalsName}`;
+    processPercentageDOM.textContent = `0.00%`;
+
+    processBar.style.width = "0%";
+
+    isSettedUp = true;
+
+    localStorage.setItem("piggyBankName", goalsName);
+    localStorage.setItem("piggyBankGoalMoney", goalMoney);
+    localStorage.setItem("isSettedUp", isSettedUp);
+  }
+}
+
+// localStorage.removeItem("isSettedUp");
+
+nextBtn.addEventListener("click", next);
+resetBtn.addEventListener("click", resetInputs);
+
+goalNameBtn.addEventListener("click", setName);
+goalPriceBtn.addEventListener("click", setPrice);
+
+// piggy bank
+
+if (isSettedUp) {
+  setupDOM.style.display = "none";
+  piggyBankDOM.style.display = "flex";
+
+  currentMoneyDOM.textContent = `${currentMoney} TL / ${goalMoney} TL `;
+  headerText.innerHTML = `Piggy Bank for ${goalsName}`;
+}
 
 if (localStorage.getItem("piggyBankMoney")) {
   currentMoney = parseInt(localStorage.getItem("piggyBankMoney"));
 }
-
-// localStorage.removeItem("piggyBankMoney");
 
 function init() {
   let percentage = (currentMoney / goalMoney) * 100;
@@ -81,19 +194,18 @@ const lightSide = document.querySelector(".light-side");
 const toggleBtn = document.querySelector(".toggle-btn");
 
 function switchToDark() {
-  toggleBtn.classList.remove("slideToRight");
-  toggleBtn.classList.add("slideToLeft");
-
   document.body.classList.add("dark");
 
   localStorage.setItem("piggyBankTheme", "dark");
+  darkSide.classList.add("dark-active");
+  lightSide.classList.add("de-active");
 }
 
 function switchToLight() {
-  toggleBtn.classList.remove("slideToLeft");
-  toggleBtn.classList.add("slideToRight");
-
   document.body.classList.remove("dark");
+
+  lightSide.classList.remove("de-active");
+  darkSide.classList.remove("dark-active");
 
   localStorage.removeItem("piggyBankTheme", "dark");
 }
@@ -103,7 +215,131 @@ lightSide.addEventListener("click", switchToLight);
 
 if (localStorage.getItem("piggyBankTheme")) {
   document.body.classList.add("dark");
-
-  toggleBtn.classList.remove("slideToRight");
-  toggleBtn.classList.add("slideToLeft");
 }
+
+// btt button
+const bttBtn = document.querySelector(".btt-btn");
+
+window.addEventListener("scroll", () => {
+  let headersPosition = header.offsetTop;
+  let headersHeight = header.getBoundingClientRect().height;
+  let currentPosition = window.pageYOffset;
+
+  if (currentPosition > headersPosition + headersHeight) {
+    bttBtn.style.visibility = "visible";
+  } else {
+    bttBtn.style.visibility = "hidden";
+  }
+});
+
+bttBtn.addEventListener("click", () => {
+  window.scrollTo({
+    left: 0,
+    top: 0,
+  });
+});
+
+// sidebar elements
+const resetNameBtn = document.querySelector(".reset-name-btn");
+const resetPriceBtn = document.querySelector(".reset-price-btn");
+const resetPiggyBankBtn = document.querySelector(".reset-piggy-bank-btn");
+
+// reset money
+const moneyAlertBox = document.querySelector(".money-alertbox");
+const moneyInput = document.querySelector(".new-goalMoney-input");
+const moneyConfirmBtn = document.querySelector(".money-yes-btn");
+const moneyCloseBtn = document.querySelector(".close-moneybox-btn");
+
+function changeMoney() {
+  goalMoney = moneyInput.value;
+
+  currentMoneyDOM.textContent = `${currentMoney} TL / ${goalMoney} TL`;
+
+  moneyAlertBox.style.visibility = "hidden";
+
+  init();
+
+  localStorage.setItem("piggyBankGoalMoney", goalMoney);
+}
+
+moneyConfirmBtn.addEventListener("click", changeMoney);
+resetPriceBtn.addEventListener("click", () => {
+  moneyAlertBox.style.visibility = "visible";
+
+  moneyInput.value = goalMoney;
+});
+
+moneyCloseBtn.addEventListener("click", () => {
+  moneyAlertBox.style.visibility = "hidden";
+});
+
+// reset name
+const nameAlertBox = document.querySelector(".name-alertbox");
+const nameInput = document.querySelector(".new-goalName-input");
+const nameConfirmBtn = document.querySelector(".name-yes-btn");
+const nameCloseBtn = document.querySelector(".close-namebox-btn");
+
+function changeName() {
+  goalsName = nameInput.value;
+
+  headerText.textContent = `Piggy Bank for ${goalsName}`;
+
+  nameAlertBox.style.visibility = "hidden";
+
+  localStorage.setItem("piggyBankName", goalsName);
+}
+
+nameConfirmBtn.addEventListener("click", changeName);
+resetNameBtn.addEventListener("click", () => {
+  nameAlertBox.style.visibility = "visible";
+
+  nameInput.value = goalsName;
+});
+
+nameCloseBtn.addEventListener("click", () => {
+  nameAlertBox.style.visibility = "hidden";
+});
+
+// reset piggy
+const piggyAlertBox = document.querySelector(".piggy-alertbox");
+const piggyNoBtn = document.querySelector(".piggy-no-btn");
+const piggyConfirmBtn = document.querySelector(".piggy-yes-btn");
+const piggyCloseBtn = document.querySelector(".close-piggybox-btn");
+
+function resetPiggyBank() {
+  setupDOM.style.display = "flex";
+  piggyBankDOM.style.display = "none";
+
+  piggyAlertBox.style.visibility = "hidden";
+
+  localStorage.removeItem("piggyBankMoney");
+  localStorage.removeItem("isSettedUp");
+
+  hideSidebar();
+  resetInputs();
+
+  count = 0;
+  goalsName = "";
+  goalMoney = 0;
+}
+
+piggyConfirmBtn.addEventListener("click", resetPiggyBank);
+piggyNoBtn.addEventListener("click", () => {
+  piggyAlertBox.style.visibility = "hidden";
+});
+
+piggyCloseBtn.addEventListener("click", () => {
+  piggyAlertBox.style.visibility = "hidden";
+});
+
+resetPiggyBankBtn.addEventListener("click", () => {
+  piggyAlertBox.style.visibility = "visible";
+});
+
+window.addEventListener("click", (e) => {
+  if (e.target.classList.contains("alertb")) {
+    alertBox.style.visibility = "hidden";
+    nameAlertBox.style.visibility = "hidden";
+    piggyAlertBox.style.visibility = "hidden";
+  }
+});

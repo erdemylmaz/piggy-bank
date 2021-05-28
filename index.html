@@ -11,15 +11,77 @@
     <script src="https://kit.fontawesome.com/fa178081cb.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="alert-box">
+    <div class="setup">
+        <div class="setup-container">
+            <div class="setup-title">Piggy Bank</div>
+            <div class="setup-reset">
+                <div class="reset-btn">Reset Inputs</div>
+            </div>
+            <div class="setup-forms">
+                <div class="goal-name-form setup-form">
+                    <input type="text" class="goals-name setup-input" placeholder="What is your goal?">
+                    <div class="goal-name-btn">Set Goal's Name!</div>
+                </div>
+
+                <div class="goal-price-form setup-form">
+                    <input type="number" class="goals-price setup-input" placeholder="What is your goal money?">
+                    <div class="goal-price-btn">Set Goal Money!</div>
+                </div>
+            </div>
+
+            <div class="setup-footer">
+                <div class="next-btn">Next</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="name-alertbox alertb">
+       <div class="box-container">
+            <div class="box-header"><i class="fas fa-times close-namebox-btn"></i></div>
+            <div class="box-title">
+                <div class="box-text">What is your goal?</div>
+                <input type="text" class="new-goalName-input" placeholder="What is your goal?">
+            </div>
+            <div class="box-btns">
+                <div class="name-yes-btn box-btn">Change!</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="money-alertbox alertb">
+       <div class="box-container">
+            <div class="box-header"><i class="fas fa-times close-moneybox-btn"></i></div>
+            <div class="box-title">
+                <div class="box-text">What is your goal money?</div>
+                <input type="number" class="new-goalMoney-input" placeholder="What is your goal money?">
+            </div>
+            <div class="box-btns">
+                <div class="money-yes-btn box-btn">Change!</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="piggy-alertbox alertb">
+       <div class="box-container">
+            <div class="box-header"><i class="fas fa-times close-piggybox-btn"></i></div>
+            <div class="box-title">Are you sure about reset piggy bank?</div>
+            <div class="box-btns">
+                <div class="piggy-no-btn box-btn">No!</div>
+                <div class="piggy-yes-btn box-btn">Reset!</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert-box alertb">
         <div class="box-container">
             <div class="box-header"><i class="fas fa-times close-box-btn"></i></div>
             <div class="box-title">You do not have enough money!</div>
         </div>
     </div>
+
     <div class="container">
         <div class="moneybox">
-            <div class="header">Piggy Bank for America Travel <i class="fas fa-flag-usa flag"></i></div>
+            <div class="header"><span class="header-text">Piggy Bank for</span></div>
             <div class="forms">
                 <div class="add-form form">
                     <input type="number" placeholder="Amount" min="1" class="adding-money">
@@ -32,8 +94,8 @@
                 </div>
             </div>
 
-            <div class="process-text">123 TL / 18000 TL</div>
-            <div class="process-percentage">15%</div>
+            <div class="process-text">0 TL / 0 TL</div>
+            <div class="process-percentage">0%</div>
 
             <div class="process">
                 <div class="process-bar"></div>
@@ -66,14 +128,25 @@
                 <div class="item-price total">18000 TL</div>
             </div>
         </div>
+
+        <div class="menu">
+            <div class="menu-header"><i class="fas fa-bars menu-btn"></i></div>
+        </div>
     </div>
 
-    <div class="switch-box">
-        <div class="dark-side side"><i class="fas fa-moon"></i></div>
-        <div class="light-side side"><i class="fas fa-sun"></i></div>
+    <div class="sidebar">
+        <div class="sidebar-header"><i class="fas fa-times close-sidebar-btn"></i></div>
+        <div class="sidebar-item reset-name-btn"><div class="sidebar-item-text">Reset Goal's Name</div></div>
+        <div class="sidebar-item reset-price-btn"><div class="sidebar-item-text">Reset  Goal Money</div></div>
+        <div class="sidebar-item reset-piggy-bank-btn"><div class="sidebar-item-text">Reset Piggy Bank</div></div>
 
-        <div class="toggle-btn"></div>
+        <div class="switch-box">
+            <div class="dark-side side"><i class="fas fa-moon"></i></div>
+            <div class="light-side side"><i class="fas fa-sun"></i></div>
+        </div>
+
     </div>
+    <div class="btt-btn"><i class="fas fa-arrow-up"></i></div>
 
 
 <!-- JavaScript -->
