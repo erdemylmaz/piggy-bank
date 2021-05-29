@@ -43,8 +43,6 @@ body {
   height: 100vh;
   margin: 0 auto;
 
-  overflow: hidden;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -326,7 +324,7 @@ img {
 }
 
 .moneybox {
-  width: 70%;
+  width: 65%;
   min-height: 90vh;
 
   display: flex;
@@ -458,8 +456,8 @@ input::placeholder {
 
 .list {
   font-weight: 100;
-  width: 20%;
-  min-height: 90vh;
+  width: 25%;
+  height: 90vh;
 }
 
 .list-title {
@@ -960,7 +958,7 @@ input::placeholder {
 
   font-size: 14px;
 
-  margin-right: 4px;
+  margin-right: 16px;
 
   background-color: rgba(0, 204, 255, 0.5);
 
@@ -1027,10 +1025,80 @@ input::placeholder {
 .list-items {
   margin-top: 8px;
 
+  display: flex;
+  flex-direction: column;
+
   height: 66vh;
   overflow-y: scroll;
 }
 
 .list-items::-webkit-scrollbar {
   display: none;
+}
+
+.show-scrollbar::-webkit-scrollbar {
+  display: block;
+  width: 8px;
+  height: 100%;
+  background-color: var(--background2);
+
+  border: 1px solid var(--darkbackground);
+}
+
+.show-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--lightBlue);
+
+  border: 1px solid var(--lightBlue);
+}
+
+.item-input {
+  width: 64px;
+
+  border: 1px solid var(--background2);
+}
+
+.item-input:focus:hover {
+  border: 1px solid var(--lightBlue);
+}
+
+.item-input:hover {
+  border: 1px solid var(--mainBackground);
+}
+
+.list-item:hover .item-input {
+  border: 1px solid var(--background2);
+  border-bottom: 1px solid var(--mainBackground);
+}
+
+.list-item:hover .item-input:hover {
+  border: 1px solid var(--mainBackground);
+}
+
+.list-item:hover .item-input:focus {
+  border: 1px solid var(--lightBlue);
+}
+
+.dark .list-item:hover .item-input {
+  border: 1px solid transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.dark .list-item:hover .item-input:hover {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.item-input:hover {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.dark .item-input:focus {
+  border: 1px solid var(--darkbackground);
+}
+
+.dark .item-input:focus:hover {
+  border: 1px solid var(--darkbackground);
+}
+
+.dark .list-item:hover .item-input:focus {
+  border: 1px solid var(--darkbackground);
 }

@@ -36,6 +36,8 @@ let isSettedUp = false;
 
 let count = 0;
 
+let currency = "₺";
+
 let currentMoney = 0;
 let goalMoney = 0;
 let goalsName = "";
@@ -98,7 +100,7 @@ function next() {
     setupDOM.style.display = "none";
     piggyBankDOM.style.display = "flex";
 
-    currentMoneyDOM.textContent = `${currentMoney} TL / ${goalMoney} TL `;
+    currentMoneyDOM.textContent = `${currentMoney} ${currency} / ${goalMoney} ${currency} `;
     headerText.innerHTML = `Piggy Bank for ${goalsName}`;
     processPercentageDOM.textContent = `0.00%`;
 
@@ -141,7 +143,7 @@ function init() {
     percentage = 100;
   }
 
-  currentMoneyDOM.textContent = `${currentMoney} TL / ${goalMoney} TL`;
+  currentMoneyDOM.textContent = `${currentMoney} ${currency} / ${goalMoney} ${currency}`;
   processPercentageDOM.textContent = `${percentage.toFixed(2)}%`;
 
   processBar.style.width = `${percentage}%`;
@@ -188,7 +190,7 @@ alertBox.addEventListener("click", (e) => {
   }
 });
 
-// theme
+// THEME
 const darkSide = document.querySelector(".dark-side");
 const lightSide = document.querySelector(".light-side");
 const toggleBtn = document.querySelector(".toggle-btn");
@@ -215,6 +217,8 @@ lightSide.addEventListener("click", switchToLight);
 
 if (localStorage.getItem("piggyBankTheme")) {
   document.body.classList.add("dark");
+
+  switchToDark();
 }
 
 // btt button
@@ -300,7 +304,7 @@ nameCloseBtn.addEventListener("click", () => {
   nameAlertBox.style.visibility = "hidden";
 });
 
-// reset piggy
+// RESET BUTTONS
 const piggyAlertBox = document.querySelector(".piggy-alertbox");
 const piggyNoBtn = document.querySelector(".piggy-no-btn");
 const piggyConfirmBtn = document.querySelector(".piggy-yes-btn");
@@ -344,17 +348,23 @@ window.addEventListener("click", (e) => {
   }
 });
 
-// list
+// LIST
 const showDivBtn = document.querySelector(".item-add-btn");
 const addItemDiv = document.querySelector(".add-item-div");
+const listItems = document.querySelector(".list-items");
 
 showDivBtn.addEventListener("click", () => {
   if (addItemDiv.classList.contains("show-add-div")) {
     addItemDiv.classList.remove("show-add-div");
     showDivBtn.textContent = "Add item";
+
+    setTimeout(() => {
+      listItems.style.height = "66vh";
+    }, 750);
   } else {
     addItemDiv.classList.add("show-add-div");
     showDivBtn.textContent = "Hide!";
+    listItems.style.height = "50vh";
   }
 });
 
@@ -362,7 +372,6 @@ showDivBtn.addEventListener("click", () => {
 const itemsNameInput = document.querySelector(".add-item-name-input");
 const itemsPriceInput = document.querySelector(".add-item-price-input");
 const addItemBtn = document.querySelector(".add-item-submit-btn");
-const listItems = document.querySelector(".list-items");
 
 let itemList = [];
 let allItems = [];
@@ -380,18 +389,25 @@ itemList.map((item) => {
 
   div.innerHTML = `
     <div class="item-name">${item.name}</div>
-    <div class="item-price">${item.price}</div>
+    <div class="item-price"><span class="items-price">${item.price}</span> ${currency}</div>
 
     <div class="item-icons">
         <i class="fas fa-pen icon edit-item-btn"></i>
+        <i class="fas fa-check-circle icon confirm-item-btn" style="display: none;"></i>
         <i class="fas fa-trash icon delete-item-btn"></i>
     </div>
     `;
 
   listItems.appendChild(div);
+
+  if (itemList.length >= 7) {
+    listItems.classList.add("show-scrollbar");
+  }
 });
 
 let deleteButtons = document.querySelectorAll(".delete-item-btn");
+let editButtons = document.querySelectorAll(".edit-item-btn");
+let confirmButtons = document.querySelectorAll(".confirm-item-btn");
 
 deleteItem = (e) => {
   let itemsId = parseInt(e.target.parentNode.parentNode.dataset.id);
@@ -405,10 +421,17 @@ deleteItem = (e) => {
         itemList[x].id = x;
       }
 
+      console.log(itemList, allItems);
+
       localStorage.setItem("piggyBankItems", JSON.stringify(itemList));
 
       deleteButtons = document.querySelectorAll(".delete-item-btn");
+      editButtons = document.querySelectorAll(".edit-item-btn");
     }
+  }
+
+  if (itemList.length < 7) {
+    listItems.classList.remove("show-scrollbar");
   }
 
   listItems.removeChild(item);
@@ -416,6 +439,56 @@ deleteItem = (e) => {
 
 deleteButtons.forEach((btn) => {
   btn.addEventListener("click", deleteItem);
+});
+
+editItem = (e) => {
+  let item = e.target.parentElement.parentElement;
+  let itemsId = parseInt(item.dataset.id);
+  let itemNameDOM = item.querySelector(".item-name");
+  let itemPriceDOM = item.querySelector(".items-price");
+  let confirmBtn = item.querySelector(".confirm-item-btn");
+
+  itemNameDOM.innerHTML = `<input type="text" class="edit-item-name-input item-input" placeholder="Name" value=${itemNameDOM.textContent} />`;
+  itemPriceDOM.innerHTML = `<input type="number" class="edit-item-price-input item-input" placeholder="Price" value=${itemPriceDOM.textContent} />`;
+
+  e.target.style.display = "none";
+  confirmBtn.style.display = "inline-flex";
+};
+
+confirmEdit = (e) => {
+  let item = e.target.parentElement.parentElement;
+  let itemsId = parseInt(item.dataset.id);
+  let itemNameDOM = item.querySelector(".item-name");
+  let itemPriceDOM = item.querySelector(".items-price");
+  let penBtn = item.querySelector(".edit-item-btn");
+
+  let itemNameInput = item.querySelector(".edit-item-name-input");
+  let itemPriceInput = item.querySelector(".edit-item-price-input");
+
+  itemNameDOM.textContent = itemNameInput.value;
+  itemPriceDOM.textContent = itemPriceInput.value;
+
+  for (let x = 0; x < allItems.length; x++) {
+    if (x == itemsId) {
+      let item = itemList[x];
+
+      item.name = itemNameInput.value;
+      item.price = itemPriceInput.value;
+
+      localStorage.setItem("piggyBankItems", JSON.stringify(itemList));
+    }
+  }
+
+  e.target.style.display = "none";
+  penBtn.style.display = "inline-flex";
+};
+
+confirmButtons.forEach((btn) => {
+  btn.addEventListener("click", confirmEdit);
+});
+
+editButtons.forEach((btn) => {
+  btn.addEventListener("click", editItem);
 });
 
 let id = itemList.length;
@@ -444,10 +517,11 @@ addItem = () => {
 
     div.innerHTML = `
     <div class="item-name">${itemsName}</div>
-    <div class="item-price">${itemsPrice}</div>
+    <div class="item-price"><span class="items-price">${itemsPrice}</span> ${currency}</div>
 
     <div class="item-icons">
         <i class="fas fa-pen icon edit-item-btn"></i>
+        <i class="fas fa-check-circle icon confirm-item-btn" style="display: none;"></i>
         <i class="fas fa-trash icon delete-item-btn"></i>
     </div>
     `;
@@ -455,13 +529,27 @@ addItem = () => {
     listItems.appendChild(div);
 
     let deleteButtons = document.querySelectorAll(".delete-item-btn");
+    let editButtons = document.querySelectorAll(".edit-item-btn");
+    let confirmButtons = document.querySelectorAll(".confirm-item-btn");
 
     deleteButtons.forEach((btn) => {
       btn.addEventListener("click", deleteItem);
     });
 
+    editButtons.forEach((btn) => {
+      btn.addEventListener("click", editItem);
+    });
+
+    confirmButtons.forEach((btn) => {
+      btn.addEventListener("click", confirmEdit);
+    });
+
     localStorage.setItem("piggyBankItems", JSON.stringify(itemList));
     localStorage.setItem("piggyAllItems", JSON.stringify(allItems));
+
+    if (itemList.length >= 7) {
+      listItems.classList.add("show-scrollbar");
+    }
 
     id++;
   }
