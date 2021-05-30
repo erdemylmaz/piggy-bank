@@ -316,8 +316,13 @@ function resetPiggyBank() {
 
   piggyAlertBox.style.visibility = "hidden";
 
+  itemList = [];
+
   localStorage.removeItem("piggyBankMoney");
   localStorage.removeItem("isSettedUp");
+  localStorage.removeItem("piggyBankItems");
+
+  listItems.innerHTML = "";
 
   hideSidebar();
   resetInputs();

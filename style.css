@@ -600,6 +600,10 @@ input::placeholder {
   cursor: pointer;
 }
 
+.mobile-alert {
+  display: none;
+}
+
 /* responsive */
 @media only screen and (max-width: 1000px) {
   .item-name {
@@ -611,39 +615,27 @@ input::placeholder {
   }
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 660px) {
   .container {
+    display: none;
+  }
+
+  .container * {
+    display: none;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .mobile-alert {
+    width: 95%;
+    min-height: 100vh;
+    margin: 0 auto;
+
     display: flex;
     flex-direction: column;
-  }
-
-  .list {
-    width: 80%;
-  }
-
-  .switch-box {
-    width: 128px;
-    height: 48px;
-  }
-
-  .side {
-    width: 64px;
-    height: 48px;
-
-    font-size: 20px;
-  }
-
-  .toggle-btn {
-    width: 64px;
-    height: 48px;
-  }
-
-  .slideToRight {
-    margin-left: 64px;
-  }
-
-  .header {
-    font-size: 24px;
+    justify-content: center;
   }
 }
 
@@ -994,8 +986,13 @@ input::placeholder {
   padding-top: 16px;
   padding-bottom: 16px;
 
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
+  border-top: 1px solid var(--lightBlue);
+  border-bottom: 1px solid var(--lightBlue);
+}
+
+.dark .show-add-div {
+  border-top: 1px solid var(--blue);
+  border-bottom: 1px solid var(--blue);
 }
 
 .list-input {
@@ -1101,4 +1098,17 @@ input::placeholder {
 
 .dark .list-item:hover .item-input:focus {
   border: 1px solid var(--darkbackground);
+}
+
+.about-me-btn:hover {
+  background-color: #6a6a6a;
+}
+
+.dark .about-me-btn:hover {
+  background-color: #4a4a4a;
+}
+
+a {
+  text-decoration: none;
+  color: black;
 }
